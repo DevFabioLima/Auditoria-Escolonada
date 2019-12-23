@@ -1,6 +1,7 @@
 import * as Yup from "yup";
 
 import Plan from '../models/Plan';
+import File from '../models/File';
 
 class ListController {
   async store(req, res) {
@@ -36,10 +37,11 @@ class ListController {
     const plan = await Plan.findOne({
         where: {item: req.body.item, problema: req.body.problema}
     });
+    
     const { auditoria_id } = await Plan.update(req.params,{
       where: {id: plan.id}
     });
-
+  
     return res.json({
       item,
       problema,
@@ -56,19 +58,74 @@ class ListController {
   }
   async index(req, res) {
     const { page = 1 } = req.query;
-    const list = await List.findAll({
-      attributes: ["name", "cpf"],
+    const plan = await Plan.findAll({
+      attributes: ["item", "problema", "maquina", "setor","responsavel","data","prazo","conclusao"],
       include: [
         {
-          model: Event,
-
-          attributes: ["name", "attraction"]
+          model: File,
+          as: 'file',
+          attributes: ["id", "path", "url"]
         }
       ],
       limit: 20,
       offset: (page - 1) * 20
     });
-    return res.json(list);
+    return res.json(plan);
+  }
+
+  async update (req, res){
+    const schema = Yup.object().shape({
+      item: Yup.string(),
+      problema: Yup.string(),
+      auditor: Yup.string(),
+      maquina: Yup.string(),
+      setor: Yup.string(),
+      responsavel: Yup.string(),
+      data: Yup.date(),
+      prazo: Yup.date(),
+      conclusao: Yup.date()
+    });
+    if(!(await schema.isValid(req.body))){
+      return res.status(400).json({error: "Validation fails"})
+    }
+    const plan = await Plan.findByPk(req.params.id);
+
+    if(!plan){
+      return res.status(400).json({error: "This event not exist"});
+    }
+    const {
+       item, 
+       problema,
+       auditor, 
+       maquina, 
+       setor, 
+       responsavel, 
+       data, 
+       prazo, 
+       conclusao
+      } = await plan.update(req.body);
+      return res.json ({
+        item, 
+        problema,
+        auditor, 
+        maquina, 
+        setor, 
+        responsavel, 
+        data, 
+        prazo, 
+        conclusao
+      })
+  }
+
+  async delete (req, res){
+    const plan = await Plan.findByPk(req.params.id);
+    if(!plan){
+      return res.status(400).json({error: "Plan not exist"});
+    }
+    await Plan.destroy({ where: {id: req.params.id}});
+    const plan2 = await Plan.findAll();
+    return res.json(plan2);
+
   }
 }
 

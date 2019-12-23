@@ -27,6 +27,9 @@ routes.put("/auditoria/:id", AuditoriaController.update);
 routes.delete("/auditoria/:id", AuditoriaController.delete);
 
 routes.post("/plan/:auditoria_id", PlanController.store);
+routes.get("/plan",PlanController.index);
+routes.put("/plan/:id",PlanController.update);
+routes.delete("/plan/:id",PlanController.delete);
 
 routes.post("/files", upload.single("file"), FileController.store);
 
