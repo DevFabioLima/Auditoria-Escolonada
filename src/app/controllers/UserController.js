@@ -12,7 +12,7 @@ class UserController {
         .required()
         .min(4),
       cargo: Yup.string()
-        .required()
+        
 
     });
     if (!(await schema.isValid(req.body))) {
@@ -27,12 +27,7 @@ class UserController {
     
     // RETORNA OS DADOS QUE FORAM INSERIDOS //
     const { id, name, email, cargo } = await User.create(req.body);
-    return res.json({
-      id,
-      name,
-      email,
-      cargo
-    });
+    
   }
 
   async update(req, res) {
