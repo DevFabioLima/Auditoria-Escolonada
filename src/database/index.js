@@ -3,10 +3,10 @@ import User from "../app/models/User";
 import Auditoria from "../app/models/Auditoria";
 import Plan from '../app/models/Plan';
 import File from '../app/models/File';
-
+import Question from '../app/models/Question';
 import databaseConfig from "../config/database";
 
-const models = [User,Auditoria,Plan,File];
+const models = [User,Auditoria,Plan,File,Question];
 
 class Database {
   constructor() {
