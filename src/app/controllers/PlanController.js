@@ -60,13 +60,7 @@ class ListController {
     const { page = 1 } = req.query;
     const plan = await Plan.findAll({
       attributes: ["item", "problema", "maquina", "setor","responsavel","data","prazo","conclusao"],
-      include: [
-        {
-          model: File,
-          as: 'file',
-          attributes: ["id", "path", "url"]
-        }
-      ],
+      
       limit: 20,
       offset: (page - 1) * 20
     });
