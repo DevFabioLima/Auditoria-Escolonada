@@ -9,6 +9,7 @@ class Auditoria extends Model {
         status: Sequelize.STRING,
         auditor: Sequelize.STRING,
         data_realizado: Sequelize.DATE,
+        data: Sequelize.DATE,
         obs: Sequelize.STRING
       },
       {  

@@ -10,6 +10,7 @@ class AuditoriaController {
       status: Yup.string().required(),
       auditor: Yup.string().required(),
       data_realizado: Yup.date(),
+      data: Yup.date(),
       obs: Yup.string()
     });
     if (!(await schema.isValid(req.body))) {
@@ -30,6 +31,7 @@ class AuditoriaController {
       status,
       auditor,
       data_realizado,
+      data,
       obs
     } = await Auditoria.create(req.body);
     return res.json({
@@ -39,6 +41,7 @@ class AuditoriaController {
       status,
       auditor,
       data_realizado,
+      data,
       obs
     });
   }

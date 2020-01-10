@@ -12,6 +12,7 @@ import AgendaController from './app/controllers/AgendaController';
 import QuestionController from './app/controllers/QuestionController';
 import AllQuestionController from './app/controllers/AllQuestionController';
 import SetorController from './app/controllers/SetorController';
+import AuditoriaWeekController from './app/controllers/AuditoriaWeekController';
 
 const routes = new Router();
 const upload = multer(multerConfig);
@@ -40,7 +41,7 @@ routes.post("/files", upload.single("file"), FileController.store);
 routes.get("/questions/:id",QuestionController.index);
 routes.get("/all-questions",AllQuestionController.index);
 routes.get("/setor/:id",SetorController.index);
-
+routes.get("/auditorias-semana",AuditoriaWeekController.index);
 
 
 export default routes;

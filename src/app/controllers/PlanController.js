@@ -2,6 +2,7 @@ import * as Yup from "yup";
 
 import Plan from '../models/Plan';
 import File from '../models/File';
+import Auditoria from '../models/Auditoria';
 
 class ListController {
   async store(req, res) {
@@ -60,7 +61,13 @@ class ListController {
     const { page = 1 } = req.query;
     const plan = await Plan.findAll({
       attributes: ["item", "problema", "maquina", "setor","responsavel","data","prazo","conclusao"],
-      
+      include: [
+        {
+          model: Auditoria,
+          as: 'auditoria',
+          attributes: ['data']
+        },
+      ],
       limit: 20,
       offset: (page - 1) * 20
     });
