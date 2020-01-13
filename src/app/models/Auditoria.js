@@ -10,7 +10,8 @@ class Auditoria extends Model {
         auditor: Sequelize.STRING,
         data_realizado: Sequelize.DATE,
         data: Sequelize.DATE,
-        obs: Sequelize.STRING
+        obs: Sequelize.STRING,
+        turno: Sequelize.STRING
       },
       {  
         sequelize

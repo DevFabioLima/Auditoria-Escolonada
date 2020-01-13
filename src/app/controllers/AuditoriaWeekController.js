@@ -5,6 +5,7 @@ async index(req, res){
     const actualWeek = req.query.actualWeek;
     const setor = req.query.setor;
     console.log(setor);
+    console.log(actualWeek);
    
    const auditorias = await Auditoria.findAll({
        where:{

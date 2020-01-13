@@ -16,7 +16,8 @@ class ListController {
       responsavel: Yup.string(),
       data: Yup.date(),
       prazo: Yup.date(),
-      conclusao: Yup.date()
+      conclusao: Yup.date(),
+      area: Yup.number(),
     });
     if (!(await schema.isValid(req.body))) {
       return res.status(400).json({ error: "Validation fails" });
@@ -33,7 +34,8 @@ class ListController {
       responsavel,
       data,
       prazo,
-      conclusao
+      conclusao,
+      area
     } = await Plan.create(req.body);
     const plan = await Plan.findOne({
         where: {item: req.body.item, problema: req.body.problema}
@@ -54,18 +56,19 @@ class ListController {
       data,
       prazo,
       conclusao,
+      area
     });
 
   }
   async index(req, res) {
     const { page = 1 } = req.query;
     const plan = await Plan.findAll({
-      attributes: ["item", "problema", "maquina", "setor","responsavel","data","prazo","conclusao"],
+      attributes: ["item", "area", "problema", "maquina", "setor","responsavel","data","prazo","conclusao"],
       include: [
         {
           model: Auditoria,
           as: 'auditoria',
-          attributes: ['data']
+          attributes: ['data','turno']
         },
       ],
       limit: 20,
@@ -84,7 +87,8 @@ class ListController {
       responsavel: Yup.string(),
       data: Yup.date(),
       prazo: Yup.date(),
-      conclusao: Yup.date()
+      conclusao: Yup.date(),
+      area: Yup.number()
     });
     if(!(await schema.isValid(req.body))){
       return res.status(400).json({error: "Validation fails"})
@@ -103,7 +107,8 @@ class ListController {
        responsavel, 
        data, 
        prazo, 
-       conclusao
+       conclusao,
+       area
       } = await plan.update(req.body);
       return res.json ({
         item, 
@@ -114,7 +119,8 @@ class ListController {
         responsavel, 
         data, 
         prazo, 
-        conclusao
+        conclusao,
+        area
       })
   }
 

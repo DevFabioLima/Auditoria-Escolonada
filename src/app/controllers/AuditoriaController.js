@@ -11,7 +11,8 @@ class AuditoriaController {
       auditor: Yup.string().required(),
       data_realizado: Yup.date(),
       data: Yup.date(),
-      obs: Yup.string()
+      obs: Yup.string(),
+      turno: Yup.string()
     });
     if (!(await schema.isValid(req.body))) {
       return res.status(400).json({ error: "Validation fails" });
@@ -32,7 +33,8 @@ class AuditoriaController {
       auditor,
       data_realizado,
       data,
-      obs
+      obs,
+      turno
     } = await Auditoria.create(req.body);
     return res.json({
       id,
@@ -42,7 +44,8 @@ class AuditoriaController {
       auditor,
       data_realizado,
       data,
-      obs
+      obs,
+      turno
     });
   }
   async update(req, res) {
@@ -52,7 +55,8 @@ class AuditoriaController {
       status: Yup.string(),
       auditor: Yup.string(),
       data_realizado: Yup.date(),
-      obs: Yup.string()
+      obs: Yup.string(),
+      turno: Yup.string()
     });
     if (!(await schema.isValid(req.body))) {
       return res.status(400).json({ error: "Validation fails" });
@@ -69,7 +73,8 @@ class AuditoriaController {
       status,
       auditor,
       data_realizado,
-      obs
+      obs,
+      turno
     } = await auditoria.update(req.body);
     return res.json({
       setor,
@@ -77,13 +82,14 @@ class AuditoriaController {
       status,
       auditor,
       data_realizado,
-      obs
+      obs,
+      turno
     });
   }
   async index(req, res) {
     const { page = 1 } = req.query;
     const auditorias = await Auditoria.findAll({
-      attributes: ["setor", "semana", "status", "auditor", "data_realizado", "obs"],
+      attributes: ["setor", "semana", "status", "auditor", "data_realizado", "obs","turno"],
       limit: 20,
       offset: (page - 1) * 20
     });

@@ -1,6 +1,5 @@
 import Sequelize, { Model } from "sequelize";
 
-
 class Plan extends Model {
   static init(sequelize) {
     super.init(
@@ -14,7 +13,9 @@ class Plan extends Model {
         responsavel: Sequelize.STRING,
         data: Sequelize.DATE,
         prazo: Sequelize.DATE,
-        conclusao:Sequelize.DATE
+        conclusao:Sequelize.DATE,
+        area: Sequelize.INTEGER
+
       },
       {
         sequelize
