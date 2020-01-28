@@ -61,9 +61,8 @@ class ListController {
 
   }
   async index(req, res) {
-    const { page = 1 } = req.query;
     const plan = await Plan.findAll({
-      attributes: ["item", "area", "problema", "maquina", "setor","responsavel","data","prazo","conclusao"],
+      attributes: ["item", "area", "problema", "acao", "maquina", "setor","responsavel","data","prazo","conclusao"],
       include: [
         {
           model: Auditoria,
@@ -71,8 +70,6 @@ class ListController {
           attributes: ['data','turno']
         },
       ],
-      limit: 20,
-      offset: (page - 1) * 20
     });
     return res.json(plan);
   }

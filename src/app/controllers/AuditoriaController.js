@@ -12,7 +12,8 @@ class AuditoriaController {
       data_realizado: Yup.date(),
       data: Yup.date(),
       obs: Yup.string(),
-      turno: Yup.string()
+      turno: Yup.string(),
+      cargo: Yup.string()
     });
     if (!(await schema.isValid(req.body))) {
       return res.status(400).json({ error: "Validation fails" });
@@ -20,8 +21,7 @@ class AuditoriaController {
     const auditoriaExist = await Auditoria.findOne({
       where: { setor: req.body.setor, semana: req.body.semana }
     });
-    
-    
+      
     if (auditoriaExist) {
       return res.status(400).json({ error: "Auuditoria already exist" });
     }
@@ -34,7 +34,8 @@ class AuditoriaController {
       data_realizado,
       data,
       obs,
-      turno
+      turno,
+      cargo
     } = await Auditoria.create(req.body);
     return res.json({
       id,
@@ -45,7 +46,8 @@ class AuditoriaController {
       data_realizado,
       data,
       obs,
-      turno
+      turno,
+      cargo
     });
   }
   async update(req, res) {
@@ -87,11 +89,8 @@ class AuditoriaController {
     });
   }
   async index(req, res) {
-    const { page = 1 } = req.query;
     const auditorias = await Auditoria.findAll({
       attributes: ["setor", "semana", "status", "auditor", "data_realizado", "obs","turno"],
-      limit: 20,
-      offset: (page - 1) * 20
     });
     return res.json(auditorias);
   }

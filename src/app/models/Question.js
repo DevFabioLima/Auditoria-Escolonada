@@ -6,6 +6,7 @@ class Question extends Model {
       {
         item: Sequelize.DECIMAL,
         text: Sequelize.STRING,
+        area: Sequelize.STRING,
       },
       {  
         sequelize

@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Tempo de geração: 10-Jan-2020 às 18:45
+-- Tempo de geração: 17-Jan-2020 às 19:45
 -- Versão do servidor: 10.4.8-MariaDB
 -- versão do PHP: 7.1.33
 
@@ -22,6 +22,26 @@ SET time_zone = "+00:00";
 -- Banco de dados: `auditoriaescalonada`
 --
 
+-- --------------------------------------------------------
+
+--
+-- Estrutura da tabela `auditoria`
+--
+
+CREATE TABLE `auditoria` (
+  `id` int(11) NOT NULL,
+  `setor` varchar(255) NOT NULL,
+  `semana` int(11) NOT NULL,
+  `status` varchar(255) NOT NULL,
+  `auditor` varchar(255) NOT NULL,
+  `data_realizado` datetime DEFAULT NULL,
+  `obs` varchar(255) DEFAULT NULL,
+  `created_at` datetime NOT NULL,
+  `updated_at` datetime NOT NULL,
+  `data` date DEFAULT NULL,
+  `turno` varchar(255) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
 --
 -- Extraindo dados da tabela `auditoria`
 --
@@ -29,8 +49,25 @@ SET time_zone = "+00:00";
 INSERT INTO `auditoria` (`id`, `setor`, `semana`, `status`, `auditor`, `data_realizado`, `obs`, `created_at`, `updated_at`, `data`, `turno`) VALUES
 (13, 'Pintura/Morita Linha 3/Acabamento', 6, 'Planejado', 'Fabio', NULL, NULL, '2019-12-26 23:58:17', '2019-12-26 23:58:17', '2019-12-28', NULL),
 (14, 'Pintura/Morita Linha 3/Acabamento', 3, 'Realizado', 'Fabio', NULL, NULL, '2019-12-26 23:58:24', '2019-12-26 23:58:24', '2020-01-04', NULL),
-(17, 'Linha de Fornos', 3, 'Realizado', 'Luciano Ramos', '2019-12-20 00:00:00', 'Sem observações', '2020-01-10 11:40:00', '2020-01-10 16:38:30', '2020-01-06', NULL),
-(20, 'Linha de Fornos', 2, 'Realizado', 'Jose', '2020-01-06 03:00:00', NULL, '2020-01-10 13:21:24', '2020-01-10 13:21:24', '2020-01-06', NULL);
+(20, 'Linha de Fornos', 2, 'Realizado', 'Jose', '2020-01-06 03:00:00', NULL, '2020-01-10 13:21:24', '2020-01-10 13:21:24', '2020-01-06', '1'),
+(21, 'Linha Tubulares', 5, 'Planejado', 'Fabio', NULL, NULL, '0000-00-00 00:00:00', '0000-00-00 00:00:00', NULL, 'adm'),
+(22, 'Linha de Pintura', 4, 'Planejado', 'Fabio', NULL, NULL, '0000-00-00 00:00:00', '0000-00-00 00:00:00', NULL, 'adm'),
+(23, 'Usinagem / Recalque', 1, 'Planejado', 'Fabio', NULL, NULL, '0000-00-00 00:00:00', '0000-00-00 00:00:00', NULL, 'adm'),
+(24, 'Linha de Fornos', 2, 'Realizado', 'joão', NULL, NULL, '0000-00-00 00:00:00', '0000-00-00 00:00:00', '0000-00-00', '1');
+
+-- --------------------------------------------------------
+
+--
+-- Estrutura da tabela `files`
+--
+
+CREATE TABLE `files` (
+  `id` int(11) NOT NULL,
+  `name` varchar(255) NOT NULL,
+  `path` varchar(255) NOT NULL,
+  `created_at` datetime NOT NULL,
+  `updated_at` date DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Extraindo dados da tabela `files`
@@ -42,12 +79,53 @@ INSERT INTO `files` (`id`, `name`, `path`, `created_at`, `updated_at`) VALUES
 (3, 'cris.jpeg', '73359126cc088511d16d5a73e7ce549b.jpeg', '2019-12-23 11:41:21', '2019-12-23'),
 (4, 'cris.jpeg', 'ef9e82ecb4157879954c70d5d5b91138.jpeg', '2019-12-23 11:43:56', '2019-12-23');
 
+-- --------------------------------------------------------
+
+--
+-- Estrutura da tabela `plans`
+--
+
+CREATE TABLE `plans` (
+  `id` int(11) NOT NULL,
+  `item` decimal(2,1) DEFAULT NULL,
+  `problema` varchar(255) NOT NULL,
+  `auditor` varchar(255) NOT NULL,
+  `maquina` varchar(255) NOT NULL,
+  `setor` varchar(255) NOT NULL,
+  `acao` varchar(255) DEFAULT NULL,
+  `responsavel` varchar(255) NOT NULL,
+  `data` datetime NOT NULL,
+  `prazo` datetime NOT NULL,
+  `conclusao` datetime DEFAULT NULL,
+  `created_at` datetime NOT NULL,
+  `updated_at` datetime NOT NULL,
+  `auditoria_id` int(11) DEFAULT NULL,
+  `avatar_id` int(11) DEFAULT NULL,
+  `area` int(11) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
 --
 -- Extraindo dados da tabela `plans`
 --
 
-INSERT INTO `plans` (`id`, `item`, `problema`, `auditor`, `maquina`, `setor`, `acao`, `responsavel`, `data`, `prazo`, `conclusao`, `created_at`, `updated_at`, `auditoria_id`, `avatar_id`) VALUES
-(42, '1.1', 'Mola 301 no auxilio x visual', 'Jose', 'Morita', 'Linha de Fornos', NULL, 'Produção', '2019-12-20 00:00:00', '2019-12-22 00:00:00', NULL, '2020-01-10 17:03:06', '2020-01-10 17:03:06', 20, NULL);
+INSERT INTO `plans` (`id`, `item`, `problema`, `auditor`, `maquina`, `setor`, `acao`, `responsavel`, `data`, `prazo`, `conclusao`, `created_at`, `updated_at`, `auditoria_id`, `avatar_id`, `area`) VALUES
+(46, '1.1', 'Mola 301 no auxilio x visual', 'Jose', 'Morita', 'Linha de Fornos', NULL, 'Produção', '2020-01-06 00:00:00', '2019-12-22 00:00:00', '2020-01-07 00:00:00', '2020-01-15 13:54:28', '2020-01-16 10:52:03', 20, NULL, 1),
+(52, '1.2', 'Mola 301 no auxilio x visual', 'Jose', 'Morita', 'Linha de Fornos', NULL, 'Produção', '2020-01-06 00:00:00', '2019-12-22 00:00:00', NULL, '2020-01-16 11:49:04', '2020-01-16 11:49:04', 20, NULL, 2),
+(53, '1.3', 'Mola 301 no auxilio x visual', 'Jose', 'Morita', 'Linha de Fornos', NULL, 'Produção', '2020-01-06 00:00:00', '2019-12-22 00:00:00', NULL, '2020-01-16 11:49:56', '2020-01-16 11:49:56', 20, NULL, 2);
+
+-- --------------------------------------------------------
+
+--
+-- Estrutura da tabela `questions`
+--
+
+CREATE TABLE `questions` (
+  `id` int(11) NOT NULL,
+  `item` decimal(2,1) NOT NULL,
+  `text` varchar(255) NOT NULL,
+  `created_at` datetime NOT NULL,
+  `updated_at` datetime NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Extraindo dados da tabela `questions`
@@ -80,6 +158,16 @@ INSERT INTO `questions` (`id`, `item`, `text`, `created_at`, `updated_at`) VALUE
 (24, '9.9', 'As auditorias estão sendo realizadas conforme frequência estabelecida?', '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
 (25, '9.9', 'As checagem da primeira peça OK estão sendo realizadas? Os problemas estão sendo tratados de acordo previsto?', '0000-00-00 00:00:00', '0000-00-00 00:00:00');
 
+-- --------------------------------------------------------
+
+--
+-- Estrutura da tabela `sequelizemeta`
+--
+
+CREATE TABLE `sequelizemeta` (
+  `name` varchar(255) COLLATE utf8_unicode_ci NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
 --
 -- Extraindo dados da tabela `sequelizemeta`
 --
@@ -95,6 +183,23 @@ INSERT INTO `sequelizemeta` (`name`) VALUES
 ('20200110003117-add-setor-to-user.js'),
 ('20200110173000-add-turno-to-auditoria.js');
 
+-- --------------------------------------------------------
+
+--
+-- Estrutura da tabela `users`
+--
+
+CREATE TABLE `users` (
+  `id` int(11) NOT NULL,
+  `name` varchar(255) NOT NULL,
+  `email` varchar(255) NOT NULL,
+  `password_hash` varchar(255) NOT NULL,
+  `cargo` varchar(255) NOT NULL,
+  `created_at` datetime NOT NULL,
+  `updated_at` datetime NOT NULL,
+  `setor` varchar(255) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
 --
 -- Extraindo dados da tabela `users`
 --
@@ -108,6 +213,96 @@ INSERT INTO `users` (`id`, `name`, `email`, `password_hash`, `cargo`, `created_a
 (7, 'kkkk', 'xxxx@sogefigroup.com', '$2a$08$wvu97mGxtHBMEuqpV5SFz.Hh2kCYiY9IvSyfTujc32HUzlfGFl26a', '', '2019-12-26 11:41:10', '2019-12-26 11:41:10', NULL),
 (8, 'operador', 'operador@sogefigroup.com', '$2a$08$KiYCqF03ZTPyAYmytYXueuVCJfN7KxxNgQBatnc2zW/p89RBYls9S', 'Operador', '2019-12-27 11:23:33', '2020-01-10 11:24:29', 'Linha de Fornos'),
 (9, 'operador', 'operador.producao@sogefigroup.com', '$2a$08$5.JP98fbyBRZaDZ4rTPbsO9tfCQVI9s6iYCWkp3T5DocPOOM1dvCS', 'Operador', '2019-12-27 11:24:57', '2019-12-27 11:24:57', NULL);
+
+--
+-- Índices para tabelas despejadas
+--
+
+--
+-- Índices para tabela `auditoria`
+--
+ALTER TABLE `auditoria`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Índices para tabela `files`
+--
+ALTER TABLE `files`
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `path` (`path`);
+
+--
+-- Índices para tabela `plans`
+--
+ALTER TABLE `plans`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `plans_auditoria_id_foreign_idx` (`auditoria_id`),
+  ADD KEY `plans_avatar_id_foreign_idx` (`avatar_id`);
+
+--
+-- Índices para tabela `questions`
+--
+ALTER TABLE `questions`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Índices para tabela `sequelizemeta`
+--
+ALTER TABLE `sequelizemeta`
+  ADD PRIMARY KEY (`name`),
+  ADD UNIQUE KEY `name` (`name`);
+
+--
+-- Índices para tabela `users`
+--
+ALTER TABLE `users`
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `email` (`email`);
+
+--
+-- AUTO_INCREMENT de tabelas despejadas
+--
+
+--
+-- AUTO_INCREMENT de tabela `auditoria`
+--
+ALTER TABLE `auditoria`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=25;
+
+--
+-- AUTO_INCREMENT de tabela `files`
+--
+ALTER TABLE `files`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+
+--
+-- AUTO_INCREMENT de tabela `plans`
+--
+ALTER TABLE `plans`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=54;
+
+--
+-- AUTO_INCREMENT de tabela `questions`
+--
+ALTER TABLE `questions`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=26;
+
+--
+-- AUTO_INCREMENT de tabela `users`
+--
+ALTER TABLE `users`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+
+--
+-- Restrições para despejos de tabelas
+--
+
+--
+-- Limitadores para a tabela `plans`
+--
+ALTER TABLE `plans`
+  ADD CONSTRAINT `plans_auditoria_id_foreign_idx` FOREIGN KEY (`auditoria_id`) REFERENCES `auditoria` (`id`) ON DELETE SET NULL ON UPDATE CASCADE,
+  ADD CONSTRAINT `plans_avatar_id_foreign_idx` FOREIGN KEY (`avatar_id`) REFERENCES `files` (`id`) ON DELETE SET NULL ON UPDATE CASCADE;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
