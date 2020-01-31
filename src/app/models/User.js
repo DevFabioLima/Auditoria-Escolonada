@@ -10,7 +10,7 @@ class User extends Model {
         password: Sequelize.VIRTUAL,
         password_hash: Sequelize.STRING,
         cargo: Sequelize.STRING,
-        setor: Sequelize.STRING
+        area: Sequelize.STRING
       },
       {
         sequelize

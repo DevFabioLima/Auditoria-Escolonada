@@ -17,7 +17,7 @@ class ListController {
       data: Yup.date(),
       prazo: Yup.date(),
       conclusao: Yup.date(),
-      area: Yup.number(),
+      area: Yup.string(),
     });
     if (!(await schema.isValid(req.body))) {
       return res.status(400).json({ error: "Validation fails" });
@@ -62,12 +62,15 @@ class ListController {
   }
   async index(req, res) {
     const plan = await Plan.findAll({
-      attributes: ["item", "area", "problema", "acao", "maquina", "setor","responsavel","data","prazo","conclusao"],
+      attributes: ["id","item", "area", "problema", "acao", "maquina", "setor","responsavel","data","prazo","conclusao"],
       include: [
         {
           model: Auditoria,
           as: 'auditoria',
-          attributes: ['data','turno']
+          attributes: ['data','turno'],
+          model: File,
+          as: 'file',
+          attributes: ["id","name","path","url"]
         },
       ],
     });

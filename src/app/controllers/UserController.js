@@ -12,7 +12,7 @@ class UserController {
         .required()
         .min(4),
       cargo: Yup.string(),
-      setor: Yup.string()
+      area: Yup.string()
     });
     if (!(await schema.isValid(req.body))) {
       return res.status(400).json({ error: "Validation fails" });
@@ -25,7 +25,7 @@ class UserController {
     }
 
     // RETORNA OS DADOS QUE FORAM INSERIDOS //
-    const { id, name, email, cargo, setor } = await User.create(req.body);
+    const { id, name, email, cargo, area } = await User.create(req.body);
   }
 
   async update(req, res) {
@@ -42,7 +42,7 @@ class UserController {
         password ? field.required().oneOf([Yup.ref("password")]) : field
       ),
       cargo: Yup.string(),
-      setor: Yup.string()
+      area: Yup.string()
     });
     if (!(await schema.isValid(req.body))) {
       return res.status(400).json({ error: "Validation fails" });
@@ -65,13 +65,13 @@ class UserController {
       return res.status(401).json({ error: "Password does not match" });
     }
     // DA O UPDATE NO USUARIO COM AS INFORMAÇÕES DO BODY //
-    const { id, name, cargo,setor } = await user.update(req.body);
+    const { id, name, cargo,area } = await user.update(req.body);
     return res.json({
       id,
       name,
       email,
       cargo,
-      setor
+      area
     });
   }
 
@@ -88,9 +88,7 @@ class UserController {
     const { page = 1 } = req.query;
     const user = await User.findAll({
       order: ["name"],
-      attributes: ["name", "email", "cargo","setor"],
-      limit: 20,
-      offset: (page - 1) * 20
+      attributes: ["name", "email", "cargo","area"],
     });
     return res.json(user);
   }

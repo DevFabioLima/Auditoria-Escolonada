@@ -18,13 +18,13 @@ class AuditoriaController {
     if (!(await schema.isValid(req.body))) {
       return res.status(400).json({ error: "Validation fails" });
     }
-    const auditoriaExist = await Auditoria.findOne({
+    /*const auditoriaExist = await Auditoria.findOne({
       where: { setor: req.body.setor, semana: req.body.semana }
-    });
+    })
       
     if (auditoriaExist) {
       return res.status(400).json({ error: "Auuditoria already exist" });
-    }
+    } */
     const {
       id,
       setor,
@@ -64,9 +64,9 @@ class AuditoriaController {
       return res.status(400).json({ error: "Validation fails" });
     }
     const auditoria = await Auditoria.findByPk(req.params.id);
-
+    
     if (!auditoria) {
-      return res.status(400).json({ error: "This event not exist" });
+      return res.status(400).json({ error: "This auditoria not exist" });
     }
 
     const {
@@ -89,9 +89,11 @@ class AuditoriaController {
     });
   }
   async index(req, res) {
+    
     const auditorias = await Auditoria.findAll({
-      attributes: ["setor", "semana", "status", "auditor", "data_realizado", "obs","turno"],
+      attributes: ["id","setor", "semana", "status", "auditor", "data_realizado", "obs","turno"],
     });
+    
     return res.json(auditorias);
   }
   async delete(req, res) {
