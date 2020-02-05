@@ -62,12 +62,13 @@ class ListController {
   }
   async index(req, res) {
     const plan = await Plan.findAll({
-      attributes: ["id","item", "area", "problema", "acao", "maquina", "setor","responsavel","data","prazo","conclusao"],
+      attributes: ["id","item","area", "problema", "acao", "maquina", "setor","responsavel","data","prazo","conclusao","subitem"],
       include: [
         {
           model: Auditoria,
           as: 'auditoria',
-          attributes: ['data','turno'],
+          attributes: ['id','data','turno'],
+        }, {
           model: File,
           as: 'file',
           attributes: ["id","name","path","url"]

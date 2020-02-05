@@ -14,7 +14,8 @@ class Plan extends Model {
         data: Sequelize.DATE,
         prazo: Sequelize.DATE,
         conclusao:Sequelize.DATE,
-        area: Sequelize.STRING
+        area: Sequelize.STRING,
+        subitem: Sequelize.INTEGER,
 
       },
       {

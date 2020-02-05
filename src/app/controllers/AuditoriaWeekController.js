@@ -4,13 +4,13 @@ class AuditoriaWeekController {
 async index(req, res){
     const actualWeek = req.query.actualWeek;
     const setor = req.query.setor;
-    console.log(setor);
-    console.log(actualWeek);
+
    
    const auditorias = await Auditoria.findAll({
        where:{
            setor:setor,
-           semana: actualWeek   
+           semana: actualWeek,
+           cargo: 'Operador',
        },
        order:['created_at']
    });

@@ -15,6 +15,7 @@ import SetorController from './app/controllers/SetorController';
 import AuditoriaWeekController from './app/controllers/AuditoriaWeekController';
 import AuditoriaMonthController from './app/controllers/AuditoriaMonthController';
 import AuditoriaUnicaController from './app/controllers/AuditoriaUnicaController';
+import AuditoriaGestaoController from './app/controllers/AuditoriaGestaoController';
 
 const routes = new Router();
 const upload = multer(multerConfig);
@@ -47,6 +48,6 @@ routes.get("/auditorias-semana",AuditoriaWeekController.index);
 
 routes.get("/auditoria-mes", AuditoriaMonthController.index);
 routes.get("/auditoria-unica/:id", AuditoriaUnicaController.index);
-
+routes.get("/auditoria-gestao", AuditoriaGestaoController.index);
 
 export default routes;
