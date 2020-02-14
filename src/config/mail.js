@@ -3,7 +3,7 @@ export default {
     port: '465',
     secure: 'true',
     auth: {
-        user: 'sogefidatacontrol@gmail.com',
+        user: 'auditoriaescalonada@gmail.com',
         pass: 'controlededados'
     },
     default: {
