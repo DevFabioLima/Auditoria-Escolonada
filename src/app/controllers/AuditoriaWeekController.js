@@ -1,4 +1,5 @@
 import Auditoria from '../models/Auditoria';
+
 import {Op} from 'sequelize';
 class AuditoriaWeekController {
 async index(req, res){

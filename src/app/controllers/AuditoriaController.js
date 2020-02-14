@@ -1,7 +1,7 @@
 import * as Yup from "yup";
 import Auditoria  from "../models/Auditoria";
-
-
+import User from '../models/User';
+import Mail from '../../lib/Mail';
 class AuditoriaController {
   async store(req, res) {
     const schema = Yup.object().shape({
@@ -13,7 +13,9 @@ class AuditoriaController {
       data: Yup.date(),
       obs: Yup.string(),
       turno: Yup.string(),
-      cargo: Yup.string()
+      cargo: Yup.string(),
+      re: Yup.number(),
+      ano: Yup.number(),
     });
     if (!(await schema.isValid(req.body))) {
       return res.status(400).json({ error: "Validation fails" });
@@ -25,6 +27,22 @@ class AuditoriaController {
     if (auditoriaExist) {
       return res.status(400).json({ error: "Auuditoria already exist" });
     } */
+    const user = await User.findOne({
+      where: {name: req.body.auditor}
+    });
+
+    await Mail.sendMail({
+      to: `${user.name} <${user.email}>`,
+      subject: 'Nova auditoria',
+      template: 'newauditoria',
+      context: {
+        name: user.name,
+        observacao: req.body.obs,
+        semana: req.body.semana,
+        setor: req.body.setor,
+      }
+    });
+   
     const {
       id,
       setor,
@@ -35,8 +53,10 @@ class AuditoriaController {
       data,
       obs,
       turno,
-      cargo
+      cargo,
+      re
     } = await Auditoria.create(req.body);
+
     return res.json({
       id,
       setor,
@@ -47,7 +67,8 @@ class AuditoriaController {
       data,
       obs,
       turno,
-      cargo
+      cargo,
+      re
     });
   }
   async update(req, res) {

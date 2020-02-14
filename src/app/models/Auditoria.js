@@ -14,6 +14,8 @@ class Auditoria extends Model {
         turno: Sequelize.STRING,
         cargo: Sequelize.STRING,
         ano: Sequelize.INTEGER,
+        re: Sequelize.INTEGER,
+        ano: Sequelize.INTEGER,
       },
       {  
         sequelize

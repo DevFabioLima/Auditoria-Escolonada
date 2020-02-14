@@ -1,11 +1,8 @@
 import Auditoria from '../models/Auditoria';
 import {Op} from 'sequelize';
-class AuditoriaGestaoController {
-async index(req, res){
-   const setor = req.query.setor;
+ async function EmailPlan(){
    const auditorias = await Auditoria.findAll({
        where:{
-           setor: setor,
            cargo: {
                [Op.ne]: 'Operador',
            },
@@ -15,8 +12,7 @@ async index(req, res){
        },
        order:[['id', 'ASC']]
    });
-   return res.json(auditorias);
+  
+   console.log("OLA");
 }
-}
-
-export default new AuditoriaGestaoController();
+export default EmailPlan;

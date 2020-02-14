@@ -7,6 +7,8 @@ class Question extends Model {
         item: Sequelize.DECIMAL,
         text: Sequelize.STRING,
         area: Sequelize.STRING,
+        subitem: Sequelize.INTEGER,
+        aux: Sequelize.INTEGER,
       },
       {  
         sequelize
