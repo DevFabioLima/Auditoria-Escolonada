@@ -4,17 +4,22 @@ import cors from 'cors';
 import routes from './routes';
 import cron from 'node-cron';
 import './database';
-import EmailPlan from './app/jobs/EmailPlan';
+import AuditoriaLate from './app/jobs/AuditoriaLate';
+import PlanLate from './app/jobs/PlanLate';
 
 class App {
   constructor() {
     this.server = express();
-    /*this.jobs();*/
+    /*this.auditoria();*/
+    /*this.plan();*/
     this.middlewares();
     this.routes();
   }
-  /**jobs(){
-    cron.schedule("* * * * *", EmailPlan);
+  /*auditoria(){
+    cron.schedule("0 12 * * *", AuditoriaLate);
+  }*/
+  /*plan(){
+    cron.schedule("0 12 * * *", PlanLate);
   }*/
 
   middlewares() {

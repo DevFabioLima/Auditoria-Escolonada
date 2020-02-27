@@ -25,8 +25,11 @@ class ListController {
     if (!(await schema.isValid(req.body))) {
       return res.status(400).json({ error: "Validation fails" });
     }
-      
-
+    const user = await User.findOne({
+      where: {name: req.body.responsavel}
+    });
+    
+    const user_id = user.id;
     const {
       item,
       problema,
@@ -40,7 +43,23 @@ class ListController {
       conclusao,
       area,
       subitem,
-    } = await Plan.create(req.body);
+    } = req.body;
+
+    await Plan.create({
+      item,
+      problema,
+      auditor,
+      maquina,
+      setor,
+      acao,
+      responsavel,
+      data,
+      prazo,
+      conclusao,
+      area,
+      subitem,
+      user_id,
+    });
     const plan = await Plan.findOne({
         where: {item: req.body.item, problema: req.body.problema}
     });
@@ -48,12 +67,10 @@ class ListController {
     const { auditoria_id } = await Plan.update(req.params,{
       where: {id: plan.id}
     });
+    
+    
 
-    const user = await User.findOne({
-      where: {name: req.body.auditor}
-    });
-
-    await Mail.sendMail({
+     /*await Mail.sendMail({
       to: `${user.name} <${user.email}>`,
       subject: 'Nova ação',
       template: 'newplan',
@@ -63,7 +80,7 @@ class ListController {
         maquina: req.body.maquina,
         problema: req.body.problema,
       }
-    });
+    }); */
 
   
     return res.json({

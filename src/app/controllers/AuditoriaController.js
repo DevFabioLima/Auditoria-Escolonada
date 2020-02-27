@@ -27,11 +27,12 @@ class AuditoriaController {
     if (auditoriaExist) {
       return res.status(400).json({ error: "Auuditoria already exist" });
     } */
+    if(req.body.cargo !== 'Operador'){
     const user = await User.findOne({
       where: {name: req.body.auditor}
     });
-
-    await Mail.sendMail({
+    
+      await Mail.sendMail({
       to: `${user.name} <${user.email}>`,
       subject: 'Nova auditoria',
       template: 'newauditoria',
@@ -42,7 +43,7 @@ class AuditoriaController {
         setor: req.body.setor,
       }
     });
-   
+  }
     const {
       id,
       setor,
