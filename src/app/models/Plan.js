@@ -29,6 +29,7 @@ class Plan extends Model {
     this.belongsTo(models.Auditoria,{foreignKey:'auditoria_id',  as: 'auditoria'});
     this.belongsTo(models.File,{foreignKey:'avatar_id', as: 'file'});
     this.belongsTo(models.User,{foreignKey:'user_id', as: 'user'});
+    this.belongsTo(models.Question,{foreignKey:'question_id', as: 'question'});
   }
   
 }

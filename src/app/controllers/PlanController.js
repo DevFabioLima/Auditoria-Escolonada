@@ -5,6 +5,7 @@ import File from '../models/File';
 import Auditoria from '../models/Auditoria';
 import User from '../models/User';
 import Mail from '../../lib/Mail';
+import Question from '../models/Question';
 
 class ListController {
   async store(req, res) {
@@ -29,6 +30,10 @@ class ListController {
       where: {name: req.body.responsavel}
     });
     
+    const question = await Question.findOne({
+      where: {item: req.body.item}
+    });
+    const question_id = question.id;
     const user_id = user.id;
     const {
       item,
@@ -43,6 +48,8 @@ class ListController {
       conclusao,
       area,
       subitem,
+      avatar_id,
+      
     } = req.body;
 
     await Plan.create({
@@ -59,10 +66,13 @@ class ListController {
       area,
       subitem,
       user_id,
+      avatar_id,
+      question_id,
     });
     const plan = await Plan.findOne({
         where: {item: req.body.item, problema: req.body.problema}
     });
+   
     
     const { auditoria_id } = await Plan.update(req.params,{
       where: {id: plan.id}
@@ -111,6 +121,10 @@ class ListController {
           model: File,
           as: 'file',
           attributes: ["id","name","path","url"]
+        },{
+          model: Question,
+          as: 'question',
+          attributes: ["item","text"]
         },
       ],
     });
@@ -134,6 +148,7 @@ class ListController {
       return res.status(400).json({error: "Validation fails"})
     }
     const plan = await Plan.findByPk(req.params.id);
+    
 
     if(!plan){
       return res.status(400).json({error: "This event not exist"});

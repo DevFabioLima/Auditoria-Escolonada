@@ -32,7 +32,7 @@ class AuditoriaController {
       where: {name: req.body.auditor}
     });
     
-      await Mail.sendMail({
+    /* await Mail.sendMail({
       to: `${user.name} <${user.email}>`,
       subject: 'Nova auditoria',
       template: 'newauditoria',
@@ -42,7 +42,7 @@ class AuditoriaController {
         semana: req.body.semana,
         setor: req.body.setor,
       }
-    });
+    });*/
   }
     const {
       id,
@@ -78,9 +78,10 @@ class AuditoriaController {
       semana: Yup.number(),
       status: Yup.string(),
       auditor: Yup.string(),
-      data_realizado: Yup.date(),
+      data: Yup.date(),
       obs: Yup.string(),
-      turno: Yup.string()
+      turno: Yup.string(),
+      
     });
     if (!(await schema.isValid(req.body))) {
       return res.status(400).json({ error: "Validation fails" });
@@ -96,7 +97,7 @@ class AuditoriaController {
       semana,
       status,
       auditor,
-      data_realizado,
+      data,
       obs,
       turno
     } = await auditoria.update(req.body);
@@ -105,7 +106,7 @@ class AuditoriaController {
       semana,
       status,
       auditor,
-      data_realizado,
+      data,
       obs,
       turno
     });
@@ -113,7 +114,7 @@ class AuditoriaController {
   async index(req, res) {
     
     const auditorias = await Auditoria.findAll({
-      attributes: ["id","setor", "semana", "status", "auditor", "data_realizado", "obs","turno"],
+      attributes: ["id","setor", "semana", "status", "auditor", "data", "obs","turno"],
     });
     
     return res.json(auditorias);
