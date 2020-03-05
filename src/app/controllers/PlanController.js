@@ -116,7 +116,7 @@ class ListController {
         {
           model: Auditoria,
           as: 'auditoria',
-          attributes: ['id','data','turno'],
+          attributes: ['id','data','turno','auditor'],
         }, {
           model: File,
           as: 'file',

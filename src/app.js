@@ -15,11 +15,11 @@ class App {
     this.middlewares();
     this.routes();
   }
-  /*auditoria(){
+ /* auditoria(){
     cron.schedule("0 12 * * *", AuditoriaLate);
-  }*/
+  } */
   /*plan(){
-    cron.schedule("0 12 * * *", PlanLate);
+    cron.schedule("* * * * *", PlanLate);
   }*/
 
   middlewares() {

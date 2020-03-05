@@ -5,8 +5,9 @@ class AuditoriaWeekController {
 async index(req, res){
     const actualWeek = req.query.actualWeek;
     const setor = req.query.setor;
-
-   
+    if(setor === undefined){
+        return;
+    }else{
    const auditorias = await Auditoria.findAll({
        where:{
            setor:setor,
@@ -16,6 +17,7 @@ async index(req, res){
        order:['created_at']
    });
    return res.json(auditorias);
+}
 }
 }
 export default new AuditoriaWeekController();

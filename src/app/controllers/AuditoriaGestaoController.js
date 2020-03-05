@@ -3,6 +3,9 @@ import {Op} from 'sequelize';
 class AuditoriaGestaoController {
 async index(req, res){
    const setor = req.query.setor;
+   if(setor === undefined) {
+       return;
+   }else{
    const auditorias = await Auditoria.findAll({
        where:{
            setor: setor,
@@ -16,6 +19,7 @@ async index(req, res){
        order:[['id', 'ASC']]
    });
    return res.json(auditorias);
+}
 }
 }
 

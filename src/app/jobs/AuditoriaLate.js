@@ -24,6 +24,7 @@ import Mail from '../../lib/Mail';
        order:[['id', 'ASC']]
    });
     
+    
      const emails = await User.findAll({
        raw:true,
        attributes:['email','name'],

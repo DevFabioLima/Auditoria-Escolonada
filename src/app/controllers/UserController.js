@@ -1,6 +1,6 @@
 import * as Yup from "yup";
 import User from "../models/User";
-
+import {Op} from 'sequelize';
 class UserController {
   async store(req, res) {
     const schema = Yup.object().shape({
@@ -87,6 +87,11 @@ class UserController {
   async index(req, res) {
     const { page = 1 } = req.query;
     const user = await User.findAll({
+      where:{
+        cargo: {
+          [Op.ne]: 'Operador'
+        }
+      },
       order: ["name"],
       attributes: ["name", "email", "cargo","area"],
     });

@@ -20,7 +20,7 @@ import SetoresController from './app/controllers/SetoresController';
 import AllSetoresController from './app/controllers/AllSetoresController';
 import QuestionOpController from './app/controllers/QuestionOpController';
 import PlanUnicaController from './app/controllers/PlanUnicaController';
-
+import MatrizController from './app/controllers/MatrizController';
 const routes = new Router();
 const upload = multer(multerConfig);
 
@@ -58,4 +58,5 @@ routes.get("/all-setores",AllSetoresController.index);
 
 routes.get("/question-operador", QuestionOpController.index);
 routes.get("/plan-unica/:id", PlanUnicaController.index);
+routes.get("/matriz", MatrizController.index);
 export default routes;
