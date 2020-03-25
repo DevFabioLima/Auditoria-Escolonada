@@ -29,10 +29,7 @@ class Mail {
         }));
     }
     sendMail(message){
-        return this.transporter.sendMail({
-            ...mailConfig.default,
-            ...message,
-        });
+        console.log(message);
     }
 }
 export default new Mail();

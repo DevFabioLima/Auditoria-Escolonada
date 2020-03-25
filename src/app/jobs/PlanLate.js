@@ -1,21 +1,20 @@
 import {Op} from 'sequelize';
 import Mail from '../../lib/Mail';
 import Plan from '../models/Plan';
-import { format, addWeeks } from 'date-fns';
+import { format, addWeeks, parseISO, isBefore } from 'date-fns';
 import pt from 'date-fns/locale/pt';  
 import User from '../models/User';
 
  async function AuditoriaLate(){
  const today = format(new Date(),'yyyy-MM-dd', { locale: pt});
- const today2 = format(addWeeks(new Date(), 1), 'yyyy-MM-dd', {locale: pt});
-
+ 
    const plans = await Plan.findAll({
     raw:true,
     attributes: ['problema','setor','maquina','acao','responsavel','data','conclusao','prazo'],
        where:{
            conclusao: null,
            prazo: {
-               [Op.gt]: today
+               [Op.lt]: today
            },
        },
        order:[['id', 'ASC']],
@@ -23,18 +22,30 @@ import User from '../models/User';
            {
                model: User,
                as: 'user',
-               attributes: ['id', 'name','email']
+               attributes: ['id', 'name','email', 'gestor']
            }
        ]
    });
     
  
+    const newPlan = plans.map((plan) => {
+        return {
+            seteDias: format(addWeeks(parseISO(plan.prazo), 1), 'yyyy-MM-dd', {locale: pt}),
+            ...plan,
+        }
+    })
+    const newPlan2 = newPlan.map((plan) => {
+        return {
+            plant: isBefore(new Date(plan.seteDias),new Date(today)),
+            ...plan,
+        }
+    })
     
-   
-  await plans.map((plan) => 
-   
+    const eduardo = 'eduardo.villalba@sogefigroup.com,';
+   /* await newPlan2.map((plan) => 
      Mail.sendMail({
        to: `${plan["user.name"]} <${plan["user.email"]}>`,
+       cc: `${plan.plant ? eduardo.concat(plan["user.gestor"]) : plan["user.gestor"]}`,
        subject: 'Ação atrasada',
        template: 'lateplan',
        context: {
@@ -45,7 +56,7 @@ import User from '../models/User';
            prazo: plan.prazo,
        }
    })
-   )
+   )*/
   
  
 }

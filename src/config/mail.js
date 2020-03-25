@@ -7,6 +7,6 @@ export default {
         pass: 'controlededados'
     },
     default: {
-        from: 'AUDITORIA ESCALONADA <sogefidatacontrol@gmail.com>'
+        from: 'AUDITORIA ESCALONADA <auditoriaescalonada@gmail.com>'
     }
 }

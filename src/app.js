@@ -10,17 +10,17 @@ import PlanLate from './app/jobs/PlanLate';
 class App {
   constructor() {
     this.server = express();
-    /*this.auditoria();*/
+    this.auditoria();
     /*this.plan();*/
     this.middlewares();
     this.routes();
   }
- /* auditoria(){
-    cron.schedule("0 12 * * *", AuditoriaLate);
-  } */
-  /*plan(){
+ auditoria(){
+    cron.schedule("* * * * *", AuditoriaLate);
+  }
+ /* plan(){
     cron.schedule("* * * * *", PlanLate);
-  }*/
+  } */
 
   middlewares() {
     this.server.use(express.json());
