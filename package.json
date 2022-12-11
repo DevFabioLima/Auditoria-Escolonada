@@ -15,7 +15,7 @@
     "cors": "^2.8.5",
     "cron-es6": "^1.0.2",
     "date-fns": "^2.8.1",
-    "express": "^4.17.1",
+    "express": "^4.17.3",
     "express-handlebars": "^3.1.0",
     "firebase": "^7.5.2",
     "jsonwebtoken": "^8.5.1",
